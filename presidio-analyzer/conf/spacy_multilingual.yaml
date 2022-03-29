@@ -9,3 +9,6 @@ models:
   -
     lang_code: es
     model_name: es_core_news_md
+  -
+    lang_code: pl
+    model_name: pl_core_news_lg

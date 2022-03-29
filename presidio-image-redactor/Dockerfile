@@ -11,9 +11,10 @@ RUN apt-get update \
   && tesseract -v
 
 COPY ./Pipfile* /usr/bin/${NAME}/
-RUN pip install pipenv \
-  && pipenv sync \
-  && pipenv run python -m spacy download en_core_web_lg
+# RUN pip install pipenv \
+#   && pipenv sync \
+#   # && pipenv run python -m spacy download en_core_web_lg \
+#   && pipenv run python -m spacy download pl_core_news_lg \
 
 COPY . /usr/bin/${NAME}/
 EXPOSE ${PORT}

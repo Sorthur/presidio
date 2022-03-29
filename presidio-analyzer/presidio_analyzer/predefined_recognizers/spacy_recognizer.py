@@ -31,6 +31,7 @@ class SpacyRecognizer(LocalRecognizer):
         "NRP",
         "LOCATION",
         "PERSON",
+        "persName",
         # "ORGANIZATION" - Less accurate with the 'en_core_web_lg' model,
         # can be used with more assurance when using 'en_core_web_trf'.
     ]
@@ -43,6 +44,7 @@ class SpacyRecognizer(LocalRecognizer):
         ({"DATE_TIME"}, {"DATE", "TIME"}),
         ({"NRP"}, {"NORP"}),
         ({"ORGANIZATION"}, {"ORG"}),
+        ({"persName"}, {"persName"}),
     ]
 
     def __init__(

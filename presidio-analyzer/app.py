@@ -11,6 +11,7 @@ from werkzeug.exceptions import HTTPException
 
 from presidio_analyzer.analyzer_engine import AnalyzerEngine
 from presidio_analyzer.analyzer_request import AnalyzerRequest
+from presidio_analyzer.analyzer_engine import NlpEngineProvider
 
 DEFAULT_PORT = "3000"
 
@@ -37,7 +38,23 @@ class Server:
         self.logger.setLevel(os.environ.get("LOG_LEVEL", self.logger.level))
         self.app = Flask(__name__)
         self.logger.info("Starting analyzer engine")
-        self.engine = AnalyzerEngine()
+
+        configuration = {
+            "nlp_engine_name": "spacy",
+            "models": [{"lang_code": "pl", "model_name": "pl_core_news_lg"}, {"lang_code": "en", "model_name": "en_core_web_lg"}],
+            }
+        self.logger.info("1")
+        provider = NlpEngineProvider(nlp_configuration=configuration)
+        self.logger.info("2")
+        self.logger.info(provider.nlp_configuration)
+        self.logger.info(provider.nlp_configuration.get("models"))
+        self.logger.info(provider.nlp_configuration.get("nlp_engine_name"))
+        nlp_engine_with_polish = provider.create_engine()
+        self.logger.info("3")
+
+        self.engine = AnalyzerEngine(nlp_engine=nlp_engine_with_polish, supported_languages=["pl", "en"])
+        self.logger.info("4")
+        # self.engine = AnalyzerEngine()
         self.logger.info(WELCOME_MESSAGE)
 
         @self.app.route("/health")
