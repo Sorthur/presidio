@@ -17,8 +17,8 @@ steps:
       script: |
         set -eux  # fail on error
         pipenv sync --dev --sequential
-        pipenv run python -m spacy download en_core_web_lg
-        pipenv run python -m spacy download pl_core_news_lg
+        pipenv run python -m spacy download en_core_web_md
+        pipenv run python -m spacy download pl_core_news_md
 
   - template: ./build-python.yml
     parameters:

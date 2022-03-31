@@ -41,19 +41,12 @@ class Server:
 
         configuration = {
             "nlp_engine_name": "spacy",
-            "models": [{"lang_code": "pl", "model_name": "pl_core_news_lg"}, {"lang_code": "en", "model_name": "en_core_web_lg"}],
+            "models": [{"lang_code": "pl", "model_name": "pl_core_news_md"}, {"lang_code": "en", "model_name": "en_core_web_md"}],
             }
-        self.logger.info("1")
         provider = NlpEngineProvider(nlp_configuration=configuration)
-        self.logger.info("2")
-        self.logger.info(provider.nlp_configuration)
-        self.logger.info(provider.nlp_configuration.get("models"))
-        self.logger.info(provider.nlp_configuration.get("nlp_engine_name"))
         nlp_engine_with_polish = provider.create_engine()
-        self.logger.info("3")
-
         self.engine = AnalyzerEngine(nlp_engine=nlp_engine_with_polish, supported_languages=["pl", "en"])
-        self.logger.info("4")
+
         # self.engine = AnalyzerEngine()
         self.logger.info(WELCOME_MESSAGE)
 

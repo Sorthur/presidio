@@ -78,16 +78,16 @@ class RecognizerRegistry:
             ],
             "es": [EsNifRecognizer],
             "ALL": [
-                CreditCardRecognizer,
-                CryptoRecognizer,
-                DateRecognizer,
+                # CreditCardRecognizer,
+                # CryptoRecognizer,
+                # DateRecognizer,
                 EmailRecognizer,
-                IbanRecognizer,
-                IpRecognizer,
-                MedicalLicenseRecognizer,
+                # IbanRecognizer,
+                # IpRecognizer,
+                # MedicalLicenseRecognizer,
                 nlp_recognizer,
                 PhoneRecognizer,
-                UrlRecognizer,
+                # UrlRecognizer,
             ],
         }
         for lang in languages:

@@ -2,7 +2,7 @@ nlp_engine_name: spacy
 models:
   -
     lang_code: en
-    model_name: en_core_web_lg
+    model_name: en_core_web_md
   -
     lang_code: de
     model_name: de_core_news_md
@@ -11,4 +11,4 @@ models:
     model_name: es_core_news_md
   -
     lang_code: pl
-    model_name: pl_core_news_lg
+    model_name: pl_core_news_md

@@ -32,7 +32,7 @@ class SpacyRecognizer(LocalRecognizer):
         "LOCATION",
         "PERSON",
         "persName",
-        # "ORGANIZATION" - Less accurate with the 'en_core_web_lg' model,
+        # "ORGANIZATION" - Less accurate with the 'en_core_web_md' model,
         # can be used with more assurance when using 'en_core_web_trf'.
     ]
 

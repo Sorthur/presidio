@@ -1,9 +1,11 @@
 """REST API server for image redactor."""
+from asyncio.log import logger
 import logging
 import os
 
 from PIL import Image
 from flask import Flask, request, jsonify, Response
+from presidio_analyzer import AnalyzerRequest
 
 from presidio_image_redactor import ImageRedactorEngine
 from presidio_image_redactor.entities import InvalidParamException
@@ -47,15 +49,19 @@ class Server:
             """Return a redacted image."""
             params = get_json_data(request.form.get("data"))
             color_fill = color_fill_string_to_value(params)
+            language = str(request.form.get("language"))
+            # if not language:
+            #     raise InvalidParamException("Invalid parameter, please add language data")
             image_file = request.files.get("image")
             if not image_file:
                 raise InvalidParamException("Invalid parameter, please add image data")
             im = Image.open(image_file)
 
-            redacted_image = self.engine.redact(im, color_fill)
+            redacted_image = self.engine.redact(im, logger, color_fill, language)
 
             img_byte_arr = image_to_byte_array(redacted_image, im.format)
-            return Response(img_byte_arr, mimetype="application/octet-stream")
+            return Response(img_byte_arr, mimetype="image/png")
+            # return Response(img_byte_arr, mimetype="application/octet-stream")
 
         @self.app.errorhandler(InvalidParamException)
         def invalid_param(err):

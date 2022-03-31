@@ -1,3 +1,5 @@
+import logging
+from this import d
 from typing import List
 
 from presidio_analyzer import AnalyzerEngine, RecognizerResult
@@ -23,7 +25,7 @@ class ImageAnalyzerEngine:
             ocr = TesseractOCR()
         self.ocr = ocr
 
-    def analyze(self, image: object, **kwargs) -> List[ImageRecognizerResult]:
+    def analyze(self, image: object, language: str, logger2: logging.Logger, **kwargs) -> List[ImageRecognizerResult]:
         """Analyse method to analyse the given image.
 
         :param image: PIL Image/numpy array or file path(str) to be processed
@@ -32,11 +34,17 @@ class ImageAnalyzerEngine:
         :return: list of the extract entities with image bounding boxes
         """
         ocr_result = self.ocr.perform_ocr(image)
+        logger2.warning("111")
         text = self.ocr.get_text_from_ocr_dict(ocr_result)
-
+        if not language:
+            language = "en"
+        logger2.warning("222")
+        self.language = language
+        logger2.warning("333")
         analyzer_result = self.analyzer_engine.analyze(
-            text=text, language="en", **kwargs
+            text=text, language = language, **kwargs
         )
+        logger2.warning("444")
         bboxes = self.map_analyzer_results_to_bounding_boxes(
             analyzer_result, ocr_result, text
         )

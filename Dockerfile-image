@@ -1,0 +1,23 @@
+FROM python:3.8-slim
+
+ARG NAME
+ENV PIPENV_VENV_IN_PROJECT=1
+ENV PIP_NO_CACHE_DIR=1
+WORKDIR /usr/bin/${NAME}
+
+RUN apt-get update \
+  && apt-get install tesseract-ocr -y \
+  && rm -rf /var/lib/apt/lists/* \
+  && tesseract -v
+
+COPY ./presidio-image-redactor/Pipfile* /usr/bin/${NAME}/
+COPY ./presidio-analyzer/presidio_analyzer /usr/bin/presidio_analyzer/${NAME}/
+RUN pip install pipenv \
+  # && pipenv lock \
+  && pipenv sync \
+  && pipenv run python -m spacy download en_core_web_md \
+  && pipenv run python -m spacy download pl_core_news_md
+
+COPY ./presidio-image-redactor /usr/bin/${NAME}/
+EXPOSE ${PORT}
+CMD pipenv run python app.py
